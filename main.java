@@ -1,121 +1,88 @@
-  public static boolean isOperator(char op) {
-    if (op == '+' || op == '-' || op == '*' || op == '/' || op == '^') {
-      return true;
-    }
-    return false;
-  }
+// Bruno Antico Galin 10417318
+// Ismael de Sousa e Silva 10410870
+// Referência: https://www.youtube.com/watch?v=Etpc_-br5rI
+// Referência: https://www.youtube.com/watch?v=b_NjndniOqY
+// Referência: https://www.youtube.com/watch?v=Gt2yBZAhsGM
+// Referência: https://www.youtube.com/watch?v=wL7JOLxbMI4
 
-  public int precedence(char op) {
-    if (op == '+' || op == '-') {
-      return 1;
-    }
-    if (op == '*' || op == '/') {
-      return 2;
-    }
-    if (op == '^') {
-      return 3;
-    }
-    return 0;
-  }
+package apl1_ed2;
+import java.util.Scanner;
 
-  public double calcular(String expressao, int[] variaveis) {
-      pilhadouble valores = new pilhadouble(expressao.length());
-
-      for (int i = 0; i < expressao.length(); i++) {
-          char c = expressao.charAt(i);
-        
-          if (isOperator(c)) {
-              double n2 = valores.pop();
-              double n1 = valores.pop();
-              double res = doOperation(n1, n2, c);
-              valores.push(res);
-          } 
-            
-          else if (Character.isLetter(c)) {
-              int iVar = Character.toUpperCase(c) - 'A';
-              if (iVar >= 0 && iVar < variaveis.length) {
-                  valores.push((double) variaveis[iVar]);
-              } 
-              else {
-                  throw new IllegalArgumentException("Variável fora do intervalo: " + c);
-              }
-          } 
-          else if (Character.isDigit(c)) {
-              StringBuilder numBuilder = new StringBuilder();
-              while (i < expressao.length() && (Character.isDigit(expressao.charAt(i)) || expressao.charAt(i) == '.')) {
-                  numBuilder.append(expressao.charAt(i));
-                  i++;
-              }
-              i--;
-              valores.push(Double.parseDouble(numBuilder.toString()));
+public class Main {
+  public static void menu() {
+    Scanner scan = new Scanner(System.in);
+    String infix = "";
+    String posfix = "";
+    int[] variaveis = new int[26];
+    do {
+      System.out.println("---Árvore binária de expressão aritmética---\n1. Entrada da expressão aritmética na notação infixa.\n2. Criação da árvore binária de expressão aritmética.\n3. Exibição da árvore binária de expressão aritmética.\n4. Cálculo da expressão (realizando o percurso da árvore) .\n5. Encerramento do programa.");
+      String opcao = scan.nextLine();
+      if (opcao.equals("1")) {
+        System.out.println("Digite a expressão na notação infixa: ");
+        infix = scan.nextLine();
+      }
+      else if (opcao.equals("2")) {
+        if (infix.isEmpty()) {
+          System.out.println("Erro. Não há expressão na memória. Volte à Opção 1.");
+        }
+        else {
+          //System.out.println("Digite os valores númericos associados às variáveis da expressão digitada (separe-os por espaço): ");
+          //String vnum = scan.nextLine();
+          //String[] numspace = vnum.split(" ");
+          /*try {
+            for (int i = 0; i < numspace.length; i++) {
+              variaveis[i] = Integer.parseInt(numspace[i]);
+            }
           }
+          catch (NumberFormatException e) {
+            System.out.println("Erro: Caractere inválido. Tente novamente. ");
+            infix = "";
+          }*/
+        }
       }
-      return valores.pop();
-  }
-
-  public double calcularposfix(String expressao, int[] variaveis) {
-        String posfix = conversao(expressao);
-        return calcular(posfix, variaveis);
-    }
-
-    public double doOperation(double n1, double n2, char op) {
-            if (op == '+'){
-                return n1 + n2;
+      else if (opcao.equals("3")) {
+        if (infix.isEmpty()) {
+          System.out.println("Erro: Não há expressão na memória. Volte à Opção 1.");
+        }
+        else {
+          posfix = inpos.conversao(infix);
+          System.out.println("Expressão convertida para posfixa: \n" + posfix);
+        }
+      }
+        else if (opcao.equals("4")) {
+            if (infix.isEmpty()) {
+                System.out.println("Erro: Não há expressão na memória. Volte à Opção 1.");
             }
-            if (op == '-'){
-                return n1 - n2;
-            }
-            if (op == '*'){
-                return n1 * n2;
-            }
-            if (op == '/'){
-                try{
-                  return n1 / n2;
+            else {
+                double res = inpos.calcularposfix(infix, variaveis);
+                System.out.println("Resultado do cálculo: " + res);
+                System.out.println("Expressão: " + inpos.conversao(infix));
+                System.out.println("Valores das variáveis utilizadas na expressão:");
+                for (int i = 0; i < infix.length(); i++) {
+                    char c = infix.charAt(i);
+                    if (Character.isLetter(c)) {
+                    	c = Character.toUpperCase(c);
+                        int iVar = c - 'A';
+                        if (iVar >= 0 && iVar < variaveis.length) {
+                            System.out.println(c + " = " + variaveis[iVar]);
+                        }
+                    }
                 }
-                catch(ArithmeticException e){
-                  System.out.println("Erro: Divisão por zero.");
-              }
             }
-            if (op == '^'){
-                return Math.pow(n1, n2);
-            }
-            else{
-                throw new IllegalArgumentException("Operador inválido: " + op);
-            }
-    }
+        }
 
-  private boolean isLetter(char c) {
-    return (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' );
+      else if (opcao.equals("5")){
+        System.out.println("Programa encerrado.");
+        break; 
+      }
+      else{
+        System.out.println("Opção inválida. Tente novamente.");
+      }
+    } while(true);
+    scan.close();
   }
 
-  public String conversao(String expressao) {
-    StringBuilder posfix = new StringBuilder();
-    char c = ' ';
-
-    for(int i = 0; i < expressao.length(); i++) {
-      c = expressao.charAt(i);
-      if(isOperator(c)) {
-        while (!isEmpty() && precedence(top()) >= precedence(c)){
-          posfix.append(pop());
-        }
-        push(c);
-      }
-      else if(isLetter(c)) {
-        posfix.append(c);
-      }
-      else if(c == '(') {
-        push(c);
-      }
-      else if(c == ')') {
-        while (!isEmpty() && top() != '(') {
-          posfix.append(pop());
-        }
-        pop();
-      }
-    }
-    while (!isEmpty()) {
-      posfix.append(pop());
-    }
-
-    return posfix.toString();
+  public static void main(String[] args) {
+    menu();
   }
+}
