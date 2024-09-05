@@ -8,21 +8,57 @@
 package apl1_ed2;
 
 public class TreeNode {
-	private String key; 
+	int key; 
 	private TreeNode parent; 
 	private TreeNode left; 
 	private TreeNode right; 
 	
-	public TreeNode(String key) { 
+	public TreeNode(int key) { 
 		this(key, null);
 	} 
 
-	public TreeNode(String key, TreeNode parent) { 
+	public TreeNode(int key, TreeNode parent) { 
 		this.key = key; 
 		this.parent = parent; 
 		this.left = null; 
 		this.right = null;
-	} 
+	}
+	
+	public TreeNode getLeft() {
+		return left;
+	}
+	
+	public TreeNode getRight() {
+		return right;
+	}
+	
+	public TreeNode getParent() {
+		return parent;
+	}
+	
+	public int getKey() {
+		return key;
+	}
+	
+	public void setLeft(TreeNode left) {
+		this.left = left;
+	}
+	
+	public void setRight(TreeNode right) {
+		this.right = right;
+	}
+	
+	public void getParent(TreeNode parent) {
+		this.parent = parent;
+	}
+	
+	public void setKey(int key) {
+		this.key = key;
+	}
+	
+	public TreeNode getRoot(TreeNode Parent) {
+		return parent;
+	}
 
 	public boolean isRoot() { 
 		return parent == null;
@@ -37,5 +73,19 @@ public class TreeNode {
 		if (left != null) ++degree; 
 		if (right != null) ++degree; 
 		return degree;
-		} 
+	} 
+	
+	public int getLevel() {
+		if (isRoot()) return 0;
+		return parent.getLevel() + 1;
+	} 
+	
+	public int getHeight() {
+		if (isLeaf()) return 0;
+		return Math.max(left == null ? 0 : left.getHeight(), right == null ? 0 : right.getHeight());
+	} 
+	
+	public float visitar() {
+		return Float.NaN;
+	}
 }
