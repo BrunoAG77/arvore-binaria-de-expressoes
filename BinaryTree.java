@@ -7,78 +7,73 @@
 
 package apl1_ed2;
 
+import java.util.Stack;
+
 public class BinaryTree {
-	  public static boolean isOperator(char op) {
-		  return (op == '+' || op == '-' || op == '*' || op == '/') ? true : false;
-		  }
+	public TreeNode root;
+	
+	
+	public void createTree(int expression) {
+		if (root == null) {
+			root = new TreeNode(expression);
+		}
+		TreeNode newnode = new TreeNode(expression);
+		createTree(root, newnode);
+	}
+	
+	private void createTree(TreeNode root, TreeNode newnode) {
+		if (newnode.key > root.key) {
+			if (root.getRight() == null) {root.setRight(newnode);}
+			else {createTree(root.getRight(), newnode);}
+		}
+		else if (newnode.key < root.key) {
+			if (root.getLeft() == null) {root.setLeft(newnode);}
+			else {createTree(root.getLeft(), newnode);}
+		}
+	}
+	
+	public void preOrder() {
+		preOrder(root);
+	}
+	
+	public void inOrder() {
+		inOrder(root);
+	}
+	
+	public void postOrder() {
+		postOrder(root);
+	}
+	
+	private void preOrder(TreeNode root) {
+		System.out.println(root.getKey());
+		preOrder(root.getLeft());
+		preOrder(root.getRight());
+	}
+	
+	private void inOrder(TreeNode root) {
+		inOrder(root.getLeft());
+		System.out.println(root.getKey());
+		inOrder(root.getRight());
+	}
+	
+	private void postOrder(TreeNode root) {
+		postOrder(root.getLeft());
+		postOrder(root.getRight());
+		System.out.println(root.getKey());
+	}
+	
 
-	  public int precedence(char op) {
-		    if (op == '+' || op == '-') {
-		      return 1;
-		    }
-		    if (op == '*' || op == '/') {
-		      return 2;
-		    }
-		    return 0;
-		  }
-
-		  public double calcular(String expressao, int[] variaveis) {
-		      pilhadouble valores = new pilhadouble(expressao.length());
+		  /*public double calcular(String expressao, int[] variaveis) {
+		      Stack valores = new Stack();
 
 		      for (int i = 0; i < expressao.length(); i++) {
 		          char c = expressao.charAt(i);
 		        
 		          if (isOperator(c)) {
-		              double n2 = valores.pop();
-		              double n1 = valores.pop();
-		              double res = doOperation(n1, n2, c);
-		              valores.push(res);
+		              valores.pop();
+		              valores.pop();
 		          } 
-		            
-		          else if (Character.isLetter(c)) {
-		              int iVar = Character.toUpperCase(c) - 'A';
-		              if (iVar >= 0 && iVar < variaveis.length) {
-		                  valores.push((double) variaveis[iVar]);
-		              } 
-		              else {
-		                  throw new IllegalArgumentException("Variável fora do intervalo: " + c);
-		              }
-		          } 
-		          else if (Character.isDigit(c)) {
-		              StringBuilder numBuilder = new StringBuilder();
-		              while (i < expressao.length() && (Character.isDigit(expressao.charAt(i)) || expressao.charAt(i) == '.')) {
-		                  numBuilder.append(expressao.charAt(i));
-		                  i++;
-		              }
-		              i--;
-		              valores.push(Double.parseDouble(numBuilder.toString()));
-		          }
 		      }
 		      return valores.pop();
-
-		    public double doOperation(double n1, double n2, char op) {
-		            if (op == '+'){
-		                return n1 + n2;
-		            }
-		            if (op == '-'){
-		                return n1 - n2;
-		            }
-		            if (op == '*'){
-		                return n1 * n2;
-		            }
-		            if (op == '/'){
-		                try{
-		                  return n1 / n2;
-		                }
-		                catch(ArithmeticException e){
-		                  System.out.println("Erro: Divisão por zero.");
-		              }
-		            }
-		            if (op == '^'){
-		                return Math.pow(n1, n2);
-		            }
-		            else{
-		                throw new IllegalArgumentException("Operador inválido: " + op);
-		            }
-		    }
+		  }*/
 }
