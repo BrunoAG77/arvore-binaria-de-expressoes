@@ -12,6 +12,7 @@ public class Main {
   public static void menu() {
     Scanner scan = new Scanner(System.in);
     String infix = "";
+    BinaryTree tree = new BinaryTree();
     do {
       System.out.println("---Árvore binária de expressão aritmética---\n1. Entrada da expressão aritmética na notação infixa.\n2. Criação da árvore binária de expressão aritmética.\n3. Exibição da árvore binária de expressão aritmética.\n4. Cálculo da expressão (realizando o percurso da árvore) .\n5. Encerramento do programa.");
       String opcao = scan.nextLine();
@@ -25,11 +26,10 @@ public class Main {
           System.out.println("Erro. Não há expressão na memória. Volte à Opção 1.");
         }
         else {
-          int expression = Integer.parseInt(infix);
-          TreeNode tree = new TreeNode(expression);
+          float expression = Float.parseFloat(infix);
+          tree.createTree(expression);
           System.out.println("Árvore binária criada.");
         }
-    
       }
       else if (opcao.equals("3")) {
         if (infix.isEmpty()) {
@@ -37,8 +37,11 @@ public class Main {
         }
         else {
           System.out.println("Árvore binária percorrida em pré-ordem:");
+          tree.preOrder();
           System.out.println("Árvore binária percorrida em em-ordem:");
+          tree.inOrder();
           System.out.println("Árvore binária percorrida em pós-ordem:");
+          tree.postOrder();
         }
       }
         /*else if (opcao.equals("4")) {
@@ -65,7 +68,7 @@ public class Main {
   }
 
 
-public static void main(String[] args) {
-    menu();
+  public static void main(String[] args) {
+	  menu();
   }
 }
