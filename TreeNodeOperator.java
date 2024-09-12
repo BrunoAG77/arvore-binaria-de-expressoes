@@ -11,8 +11,8 @@ public class TreeNodeOperator extends TreeNode {
 	
 	private char operator;
 
-	public TreeNodeOperator(float key, TreeNode parent, char operator) {
-		super(key, parent);
+	public TreeNodeOperator( char operator) {
+		super(0, null);
 		this.operator = operator;
 	}
 	
