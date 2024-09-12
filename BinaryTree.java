@@ -18,6 +18,18 @@ public class BinaryTree {
 		left = right = null;
 	}
 	
+	public TreeNode getRoot() {
+		return root;
+	}
+	
+	public void setRoot(TreeNode root) {
+		this.root = root;
+	}
+	
+	public boolean isEmpty() {
+		return root == null;
+	}
+	
 	public void createTree(float value) {
 		if (root == null) {
 			root = new TreeNode(value);
@@ -59,63 +71,37 @@ public class BinaryTree {
 	}
 	
 	private void preOrder(TreeNode root) {
-		System.out.println(root.getKey() + " ");
-		preOrder(root.getLeft());
-		preOrder(root.getRight());
+		if (root != null) {
+			System.out.println(root.getKey() + " ");
+			preOrder(root.getLeft());
+			preOrder(root.getRight());
+		}
 	}
 	
 	private void inOrder(TreeNode root) {
-		inOrder(root.getLeft());
-		System.out.println(root.getKey() + " ");
-		inOrder(root.getRight());
+		if (root != null) {
+			inOrder(root.getLeft());
+			System.out.println(root.getKey() + " ");
+			inOrder(root.getRight());
+		}
 	}
 	
 	private void postOrder(TreeNode root) {
-		postOrder(root.getLeft());
-		postOrder(root.getRight());
-		System.out.println(root.getKey() + " ");
+		if (root != null) {
+			postOrder(root.getLeft());
+			postOrder(root.getRight());
+			System.out.println(root.getKey() + " ");
+		}
 	}
 	
-	  public String conversao(String expressao) {
-		    StringBuilder posfix = new StringBuilder();
-		    Stack<Character> pilha = new Stack<>();
-		    for(int i = 0; i < expressao.length(); i++) {
-		      char c = expressao.charAt(i);
-		      if (Character.isLetterOrDigit(c)) {
-		    	  posfix.append(c);
-		      }
-		      else if(.isOperator(c)) {
-		        while (!pilha.isEmpty() && precedence(pilha.peek()) >= node.precedence(c)){
-		          posfix.append(pilha.pop());
-		        }
-		        pilha.push(c);
-		      }
-		      else if(c == '(') {
-		        pilha.push(c);
-		      }
-		      else if(c == ')') {
-		        while (!pilha.isEmpty() && pilha.peek() != '(') {
-		          posfix.append(pilha.pop());
-		        }
-		        pilha.pop();
-		      }
-		    }
-		    while (!pilha.isEmpty()) {
-		      posfix.append(pilha.pop());
-		    }
 
-		    return posfix.toString();
-		  }
-	
-
-		  /*public double calcular(String expressao, int[] variaveis) {
+		 /* public double calcular(String expressao, int[] variaveis) {
 		      Stack valores = new Stack();
 
 		      for (int i = 0; i < expressao.length(); i++) {
 		          char c = expressao.charAt(i);
 		        
-		          if (isOperator(c)) {
-		              valores.pop();
+		          if (c == '+' || c == '-' || c == '*' || c == '/') {
 		              valores.pop();
 		          } 
 		         
