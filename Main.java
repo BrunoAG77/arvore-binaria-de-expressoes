@@ -7,30 +7,57 @@
 
 package apl1_ed2;
 import java.util.Scanner;
+import java.util.List;
+import java.util.Stack;
 
 public class Main {
   public static void menu() {
     Scanner scan = new Scanner(System.in);
     String infix = "";
     BinaryTree tree = new BinaryTree();
+    List<Object> tokens = null;
+    Stack<Object> expression = new Stack<>();
+    Verification check = new Verification();
+    ConvertStack inpos = new ConvertStack();
+    
     do {
       System.out.println("---Árvore binária de expressão aritmética---\n1. Entrada da expressão aritmética na notação infixa.\n2. Criação da árvore binária de expressão aritmética.\n3. Exibição da árvore binária de expressão aritmética.\n4. Cálculo da expressão (realizando o percurso da árvore) .\n5. Encerramento do programa.");
       String opcao = scan.nextLine();
       if (opcao.equals("1")) {
         System.out.println("Digite a expressão na notação infixa: ");
         infix = scan.nextLine();
-        infix.trim();
+        Tokenizer token = new Tokenizer(infix);
+        tokens = token.tokenize();
+        for (int i = 0; i < tokens.size(); i++) {
+        	System.out.println("Token[" + i + "]: " + tokens.get(i));
+        }
       }
+      
       else if (opcao.equals("2")) {
         if (infix.isEmpty()) {
           System.out.println("Erro. Não há expressão na memória. Volte à Opção 1.");
         }
         else {
-          float expression = Float.parseFloat(infix);
-          tree.createTree(expression);
+          for (int i = 0; i < tokens.size(); i++) {
+        	  Object token = tokens.get(i);
+        	  expression.push(token);
+          }
+          String pr = inpos.conversao(expression);
+          System.out.println("Pilha: " + expression);
+          System.out.println("Pilha: " + pr);
+          for (int i = 0; i < expression.size(); i++) {
+        	  Object token = expression.get(i);
+        	  if (check.isOperator((Character) token)) {
+        		  TreeNodeOperator op = new TreeNodeOperator((Character) token);
+        	  }
+        	  else if (check.isFloat((Float) token)) {
+        	  	TreeNodeOperand num = new TreeNodeOperand((Float) token);
+        	  }
+          }
           System.out.println("Árvore binária criada.");
         }
       }
+      
       else if (opcao.equals("3")) {
         if (infix.isEmpty()) {
           System.out.println("Erro: Não há expressão na memória. Volte à Opção 1.");
@@ -44,6 +71,7 @@ public class Main {
           tree.postOrder();
         }
       }
+      
         /*else if (opcao.equals("4")) {
             if (infix.isEmpty()) {
                 System.out.println("Erro: Não há expressão na memória. Volte à Opção 1.");
@@ -60,9 +88,11 @@ public class Main {
         System.out.println("Programa encerrado.");
         break; 
       }
+      
       else{
         System.out.println("Opção inválida. Tente novamente.");
       }
+      
     } while(true);
     scan.close();
   }
