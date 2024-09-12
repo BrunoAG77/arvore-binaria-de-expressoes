@@ -11,12 +11,12 @@ public class TreeNodeOperand extends TreeNode {
 	
 	private float operand;
 	
-	public TreeNodeOperand(int key, TreeNode parent, float operand) {
-		super(key, parent);
+	public TreeNodeOperand(float operand) {
+		super(operand, null);
 		this.operand = operand;
 	}
 	
-	public float visitar() {
+	public float visitarOperando() {
 		return operand;
 	}
 
