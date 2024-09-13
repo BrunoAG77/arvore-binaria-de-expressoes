@@ -12,11 +12,11 @@ public class TreeNodeOperand extends TreeNode {
 	private float operand;
 	
 	public TreeNodeOperand(float operand) {
-		super(operand, null);
+		super(String.valueOf(operand));
 		this.operand = operand;
 	}
 	
-	public float visitarOperando() {
+	public float visitar() {
 		return operand;
 	}
 
