@@ -30,33 +30,43 @@ public class BinaryTree {
 		return root == null;
 	}
 	
-	public void createTree(float value) {
+	public boolean isOperator(String op) {
+		return (op == "+" || op == "-" || op == "*" || op == "/") ? true : false;
+	}
+	
+	public void createTree(Stack<String> posfix) {
+	  TreeNode root = new TreeNode(posfix.pop());
+  	  setRoot(root);
+  	  while (!posfix.isEmpty()) {
+  		  createNode(posfix.pop());
+  	  }
+	}
+	
+	public void createNode(String value) {
 		if (root == null) {
-			root = new TreeNode(value);
+			if (isOperator(value)) {
+				root = new TreeNodeOperator(value.charAt(0));
+			}
+			else {
+				root = new TreeNodeOperand(Float.parseFloat(value));
+			}
 		}
 		else {
-			createTree(root, value);
+			createNode(root, value);
 		}
 	}
 	
-	private void createTree(TreeNode root, float value) {
-		if (root.getKey() < value) {
+	private void createNode(TreeNode root, String value) {
 			if (root.getLeft() == null) {
 				root.setLeft(new TreeNode(value));
 			}
-			else {
-				createTree(root.getLeft(), value);
-			}
-		}
-		else if (root.getKey() > value) {
-			if (root.getRight() == null) {
+			else if (root.getRight() == null) {
 				root.setRight(new TreeNode(value));
 			}
 			else {
-				createTree(root.getRight(), value);
+				createNode(root.getLeft(), value);
 			}
 		}
-	}
 	
 	public void preOrder() {
 		preOrder(root);
@@ -72,7 +82,7 @@ public class BinaryTree {
 	
 	private void preOrder(TreeNode root) {
 		if (root != null) {
-			System.out.println(root.getKey() + " ");
+			System.out.print(root.getKey() + " ");
 			preOrder(root.getLeft());
 			preOrder(root.getRight());
 		}
@@ -81,7 +91,7 @@ public class BinaryTree {
 	private void inOrder(TreeNode root) {
 		if (root != null) {
 			inOrder(root.getLeft());
-			System.out.println(root.getKey() + " ");
+			System.out.print(root.getKey() + " ");
 			inOrder(root.getRight());
 		}
 	}
@@ -90,30 +100,7 @@ public class BinaryTree {
 		if (root != null) {
 			postOrder(root.getLeft());
 			postOrder(root.getRight());
-			System.out.println(root.getKey() + " ");
+			System.out.print(root.getKey() + " ");
 		}
 	}
-	
-
-		 /* public double calcular(String expressao, int[] variaveis) {
-		      Stack valores = new Stack();
-
-		      for (int i = 0; i < expressao.length(); i++) {
-		          char c = expressao.charAt(i);
-		        
-		          if (c == '+' || c == '-' || c == '*' || c == '/') {
-		              valores.pop();
-		          } 
-		         
-		          else if (Character.isDigit(c)) {
-		              StringBuilder numBuilder = new StringBuilder();
-		              while (i < expressao.length() && (Character.isDigit(expressao.charAt(i)) || expressao.charAt(i) == '.')) {
-		                  numBuilder.append(expressao.charAt(i));
-		                  i++;
-		              }
-		              i--;
-		          }
-		      }
-		      return valores.pop();
-		  }*/
 }
