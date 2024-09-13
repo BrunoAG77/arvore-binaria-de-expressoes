@@ -8,16 +8,16 @@
 package apl1_ed2;
 
 public class TreeNode {
-	float key; 
-	private TreeNode parent; 
-	private TreeNode left; 
-	private TreeNode right; 
+	protected String key; 
+	protected TreeNode parent; 
+	protected TreeNode left; 
+	protected TreeNode right; 
 	
-	public TreeNode(float key) { 
+	public TreeNode(String key) { 
 		this(key, null);
 	} 
 
-	public TreeNode(float key, TreeNode parent) { 
+	public TreeNode(String key, TreeNode parent) { 
 		this.key = key; 
 		this.parent = parent; 
 		this.left = null; 
@@ -36,7 +36,7 @@ public class TreeNode {
 		return parent;
 	}
 	
-	public float getKey() {
+	public Object getKey() {
 		return key;
 	}
 	
@@ -52,7 +52,7 @@ public class TreeNode {
 		this.parent = parent;
 	}
 	
-	public void setKey(int key) {
+	public void setKey(String key) {
 		this.key = key;
 	}
 	
@@ -85,7 +85,7 @@ public class TreeNode {
 		return Math.max(left == null ? 0 : left.getHeight(), right == null ? 0 : right.getHeight());
 	} 
 	
-	public float visitarNo() {
+	public float visitar() {
 		return Float.NaN;
 	}
 }
