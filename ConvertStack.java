@@ -10,51 +10,43 @@ package apl1_ed2;
 import java.util.Stack;
 
 public class ConvertStack {
-	public int precedence(char op) {
-		if (op == '+' || op == '-') {
+	public int precedence(String op) {
+		if (op == "+" || op == "-") {
 			return 1;
 		}
 		    
-		if (op == '*' || op == '/') {
+		if (op == "*" || op == "/") {
 			return 2;
 		}
 		return 0;
 	}
 	
-	  public String conversao(Stack<Object> expressao) {
-		    StringBuilder posfix = new StringBuilder();
-		    Stack<Character> pilha = new Stack<>();
-		    for(int i = 0; i < expressao.size(); i++) {
-		      Object token = expressao.get(i);
-		      if (token instanceof Character) {
-		    	  char c = (Character) token;
-		    	  if (Character.isDigit(c)) {
-		    		  posfix.append(c).append(' ');
-		    	  }
-		    	  else if(c == '+' || c == '-' || c == '*' || c == '/') {
-		    		  while (!pilha.isEmpty() && precedence(pilha.peek()) >= precedence(c)){
-		    			  posfix.append(pilha.pop());
-		    		  }
-		    		  pilha.push(c);
-		    	  }
-		    	  else if(c == '(') {
-		    		  pilha.push(c);
-		    	  }
-		    	  else if(c == ')') {
-		    		  while (!pilha.isEmpty() && pilha.peek() != '(') {
-		    			  posfix.append(pilha.pop());
-		    		  }
-		    		  pilha.pop();
-		      		}
-		      }
-		      else if (token instanceof Float) {
-		    	  posfix.append(token.toString());
-		      }
-		    }
-		    while (!pilha.isEmpty()) {
-		      posfix.append(pilha.pop());
-		    }
+	public void conversao(Stack<String> expressao, Stack<String> posfix) {
+	    Stack<String> pilha = new Stack<>();
 
-		    return posfix.toString();
-		  }
+	    for(int i = 0; i < expressao.size(); i++) {
+	      String c = expressao.get(i);
+	      if (Character.isDigit(c.charAt(0))) {
+	    	  posfix.push(c);
+	      }
+	      else if(c == "+" || c == "-" || c == "*" || c == "/") {
+	        while (!pilha.isEmpty() && precedence(pilha.peek()) >= precedence(c)){
+	          posfix.push(pilha.pop());
+	        }
+	        pilha.push(c);
+	      }
+	      else if(c == "(") {
+	        pilha.push(c);
+	      }
+	      else if(c == ")") {
+	        while (!pilha.isEmpty() && pilha.peek() != "(") {
+	          posfix.push(pilha.pop());
+	        }
+	        pilha.pop();
+	      }
+	    }
+	    while (!pilha.isEmpty()) {
+	      posfix.push(pilha.pop());
+	    }
+	}
 }
