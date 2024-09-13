@@ -26,8 +26,8 @@ public class Tokenizer {
 		return expression[i++];
 	}
 	
-	public List<Object> tokenize(){
-		List<Object> tokens = new ArrayList<>();
+	public List<String> tokenize(){
+		List<String> tokens = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();
 		char aux = getNextChar();
 		boolean tokenizing = true;
@@ -45,14 +45,30 @@ public class Tokenizer {
 						aux = getNextChar();
 					}
 				} while (Character.isDigit(aux));
-				tokens.add(Float.parseFloat(sb.toString()));
+				tokens.add(sb.toString());
 			}
-			else if (aux == '+' || aux == '-' || aux == '*' || aux == '/') {
-				tokens.add(aux);
+			else if (aux == '+') {
+				tokens.add("+");
 				aux = getNextChar();
 			}
-			else if (aux == '(' || aux == ')') {
-				tokens.add(aux);
+			else if (aux == '-') {
+				tokens.add("-");
+				aux = getNextChar();
+			}
+			else if (aux == '*') {
+				tokens.add("*");
+				aux = getNextChar();
+			}
+			else if (aux == '/') {
+				tokens.add("/");
+				aux = getNextChar();
+			}
+			else if (aux == '(') {
+				tokens.add("(");
+				aux = getNextChar();
+			}
+			else if (aux == ')') {
+				tokens.add(")");
 				aux = getNextChar();
 			}
 			else if (aux == '\0') {
