@@ -11,8 +11,8 @@ public class TreeNodeOperator extends TreeNode {
 	
 	private char operator;
 
-	public TreeNodeOperator( char operator) {
-		super(0, null);
+	public TreeNodeOperator(char operator) {
+		super(String.valueOf(operator));
 		this.operator = operator;
 	}
 	
@@ -31,20 +31,22 @@ public class TreeNodeOperator extends TreeNode {
 		return 0;
 	}
 	
-    public float visitarOperador() {
+    public float visitar() {
     	if (isOperator(operator)) {
+    		float left = getLeft().visitar();
+    		float right = getRight().visitar();
     		if (operator == '+'){
-    			return getRight().getKey() + getLeft().getKey();
+    			return left + right;
     		}
     		if (operator == '-'){
-    			return getRight().getKey() - getLeft().getKey();
+    			return left - right;
     		}
     		if (operator == '*'){
-    			return getRight().getKey() * getLeft().getKey();
+    			return left * right;
     		}
     		if (operator == '/'){
     			try{
-    				return getRight().getKey() / getLeft().getKey();
+    				return left / right;
     			}
     			catch(ArithmeticException e){
     				System.out.println("Erro: Divisão por zero.");
