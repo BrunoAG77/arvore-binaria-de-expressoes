@@ -15,13 +15,14 @@ public class Main {
     Scanner scan = new Scanner(System.in);
     String infix = "";
     BinaryTree tree = new BinaryTree();
-    List<Object> tokens = null;
-    Stack<Object> expression = new Stack<>();
+    List<String> tokens = null;
+    Stack<String> expression = new Stack<>();
+    Stack<String> posfix = new Stack<>();
     Verification check = new Verification();
     ConvertStack inpos = new ConvertStack();
     
     do {
-      System.out.println("---Árvore binária de expressão aritmética---\n1. Entrada da expressão aritmética na notação infixa.\n2. Criação da árvore binária de expressão aritmética.\n3. Exibição da árvore binária de expressão aritmética.\n4. Cálculo da expressão (realizando o percurso da árvore) .\n5. Encerramento do programa.");
+      System.out.println("\n---Árvore binária de expressão aritmética---\n1. Entrada da expressão aritmética na notação infixa.\n2. Criação da árvore binária de expressão aritmética.\n3. Exibição da árvore binária de expressão aritmética.\n4. Cálculo da expressão (realizando o percurso da árvore) .\n5. Encerramento do programa.");
       String opcao = scan.nextLine();
       if (opcao.equals("1")) {
         System.out.println("Digite a expressão na notação infixa: ");
@@ -39,21 +40,13 @@ public class Main {
         }
         else {
           for (int i = 0; i < tokens.size(); i++) {
-        	  Object token = tokens.get(i);
+        	  String token = tokens.get(i);
         	  expression.push(token);
           }
-          String pr = inpos.conversao(expression);
           System.out.println("Pilha: " + expression);
-          System.out.println("Pilha: " + pr);
-          for (int i = 0; i < expression.size(); i++) {
-        	  Object token = expression.get(i);
-        	  if (check.isOperator((Character) token)) {
-        		  TreeNodeOperator op = new TreeNodeOperator((Character) token);
-        	  }
-        	  else if (check.isFloat((Float) token)) {
-        	  	TreeNodeOperand num = new TreeNodeOperand((Float) token);
-        	  }
-          }
+          inpos.conversao(expression, posfix);
+          System.out.println("Pilha posfixa: " + posfix);
+          tree.createTree(posfix);
           System.out.println("Árvore binária criada.");
         }
       }
@@ -65,9 +58,9 @@ public class Main {
         else {
           System.out.println("Árvore binária percorrida em pré-ordem:");
           tree.preOrder();
-          System.out.println("Árvore binária percorrida em em-ordem:");
+          System.out.println("\nÁrvore binária percorrida em em-ordem:");
           tree.inOrder();
-          System.out.println("Árvore binária percorrida em pós-ordem:");
+          System.out.println("\nÁrvore binária percorrida em pós-ordem:");
           tree.postOrder();
         }
       }
