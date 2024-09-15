@@ -48,7 +48,7 @@ public class TreeNode {
 		this.right = right;
 	}
 	
-	public void getParent(TreeNode parent) {
+	public void setParent(TreeNode parent) {
 		this.parent = parent;
 	}
 	
