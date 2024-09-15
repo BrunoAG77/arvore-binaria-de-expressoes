@@ -35,38 +35,24 @@ public class BinaryTree {
 	}
 	
 	public void createTree(Stack<String> posfix) {
-	  TreeNode root = new TreeNode(posfix.pop());
-  	  setRoot(root);
-  	  while (!posfix.isEmpty()) {
-  		  createNode(posfix.pop());
-  	  }
-	}
+		if (!posfix.isEmpty()) {
+			root = createNode(posfix);
+  	  	}
+	 }
 	
-	public void createNode(String value) {
-		if (root == null) {
-			if (isOperator(value)) {
-				root = new TreeNodeOperator(value.charAt(0));
-			}
-			else {
-				root = new TreeNodeOperand(Float.parseFloat(value));
-			}
+	private TreeNode createNode(Stack<String> posfix) {
+		String value = posfix.pop();
+		if (isOperator(value)) {
+			TreeNodeOperator opnode = new TreeNodeOperator(value.charAt(0));
+			opnode.setRight(createNode(posfix));
+			opnode.setLeft(createNode(posfix));
+			return opnode;
 		}
 		else {
-			createNode(root, value);
+			TreeNodeOperand numnode = new TreeNodeOperand(Float.parseFloat(value));
+			return numnode;
 		}
 	}
-	
-	private void createNode(TreeNode root, String value) {
-			if (root.getLeft() == null) {
-				root.setLeft(new TreeNode(value));
-			}
-			else if (root.getRight() == null) {
-				root.setRight(new TreeNode(value));
-			}
-			else {
-				createNode(root.getLeft(), value);
-			}
-		}
 	
 	public void preOrder() {
 		preOrder(root);
