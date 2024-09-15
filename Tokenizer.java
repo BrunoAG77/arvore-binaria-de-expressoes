@@ -31,6 +31,7 @@ public class Tokenizer {
 		StringBuilder sb = new StringBuilder();
 		char aux = getNextChar();
 		boolean tokenizing = true;
+		boolean valid = true;
 		do {
 			while (Character.isWhitespace(aux)) {
 				aux = getNextChar();
@@ -76,9 +77,14 @@ public class Tokenizer {
 			}
 			else {
 				System.out.println("Token não reconhecido: " + aux);
+				valid = false;
 				tokenizing = false;
 			}
 		} while (tokenizing);
+		if (!valid) {
+			System.out.println("Tente novamente.");
+			return null;
+		}
 		return tokens;
 	}
 }
