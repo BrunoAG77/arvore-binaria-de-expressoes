@@ -9,6 +9,9 @@ package apl1_ed2;
 import java.util.Scanner;
 import java.util.List;
 import java.util.Stack;
+import java.util.EmptyStackException;
+import java.lang.NullPointerException;
+import java.lang.NumberFormatException;
 
 public class Main {
   public static void menu() {
@@ -18,37 +21,47 @@ public class Main {
     List<String> tokens = null;
     Stack<String> expression = new Stack<>();
     Stack<String> posfix = new Stack<>();
-    Verification check = new Verification();
     ConvertStack inpos = new ConvertStack();
     
     do {
-      System.out.println("\n---Árvore binária de expressão aritmética---\n1. Entrada da expressão aritmética na notação infixa.\n2. Criação da árvore binária de expressão aritmética.\n3. Exibição da árvore binária de expressão aritmética.\n4. Cálculo da expressão (realizando o percurso da árvore) .\n5. Encerramento do programa.");
+      System.out.println("\n---Árvore binária de expressão aritmética---\n1. Entrada da expressão aritmética na notação infixa.\n2. Criação da árvore binária de expressão aritmética.\n3. Exibição da árvore binária de expressão aritmética.\n4. Cálculo da expressão (realizando o percurso da árvore).\n5. Encerramento do programa.");
       String opcao = scan.nextLine();
       if (opcao.equals("1")) {
         System.out.println("Digite a expressão na notação infixa: ");
         infix = scan.nextLine();
         Tokenizer token = new Tokenizer(infix);
         tokens = token.tokenize();
-        for (int i = 0; i < tokens.size(); i++) {
-        	System.out.println("Token[" + i + "]: " + tokens.get(i));
-        }
       }
       
       else if (opcao.equals("2")) {
-        if (infix.isEmpty()) {
-          System.out.println("Erro. Não há expressão na memória. Volte à Opção 1.");
-        }
-        else {
-          for (int i = 0; i < tokens.size(); i++) {
-        	  String token = tokens.get(i);
-        	  expression.push(token);
-          }
-          System.out.println("Pilha: " + expression);
-          inpos.conversao(expression, posfix);
-          System.out.println("Pilha posfixa: " + posfix);
-          tree.createTree(posfix);
-          System.out.println("Árvore binária criada.");
-        }
+    	try {
+    		if (infix.isEmpty()) {
+    	          System.out.println("Erro. Não há expressão na memória. Volte à Opção 1.");
+    	        }
+    	        else {
+    	          for (int i = 0; i < tokens.size(); i++) {
+    	        	  String token = tokens.get(i);
+    	        	  expression.push(token);
+    	          }
+    	          System.out.println("Pilha: " + expression);
+    	          inpos.conversao(expression, posfix);
+    	          System.out.println("Pilha posfixa: " + posfix);
+    	          tree.createTree(posfix);
+    	          System.out.println("Árvore binária criada.");
+    	        }
+    	}
+    	catch (NullPointerException e){
+    		System.out.println("Erro. Não há expressão na memória. Volte à Opção 1.");
+    		infix = "";
+    	}
+    	catch (EmptyStackException e){
+    		System.out.println("Erro. Falta um operando para uma operação. Volte à Opção 1.");
+    		infix = "";
+    	}
+    	catch (NumberFormatException e){
+    		System.out.println("Erro. Não há parênteses correspondentes. Volte à Opção 1.");
+    		infix = "";
+    	}
       }
       
       else if (opcao.equals("3")) {
