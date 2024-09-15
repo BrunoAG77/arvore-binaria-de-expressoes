@@ -58,5 +58,4 @@ public class TreeNodeOperator extends TreeNode {
     	}
         return 1;
     }
-
 }
