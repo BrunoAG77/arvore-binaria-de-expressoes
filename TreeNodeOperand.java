@@ -19,5 +19,4 @@ public class TreeNodeOperand extends TreeNode {
 	public float visitar() {
 		return operand;
 	}
-
 }
