@@ -43,9 +43,7 @@ public class Main {
     	        	  String token = tokens.get(i);
     	        	  expression.push(token);
     	          }
-    	          System.out.println("Pilha: " + expression);
     	          inpos.conversao(expression, posfix);
-    	          System.out.println("Pilha posfixa: " + posfix);
     	          tree.createTree(posfix);
     	          System.out.println("Árvore binária criada.");
     	        }
