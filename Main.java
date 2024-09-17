@@ -53,7 +53,7 @@ public class Main {
     		infix = "";
     	}
     	catch (EmptyStackException e){
-    		System.out.println("Erro. Falta um operando para uma operação. Volte à Opção 1.");
+    		System.out.println("Erro. Falta um operando para uma operação/Há um operador em excesso. Volte à Opção 1.");
     		infix = "";
     	}
     	catch (NumberFormatException e){
