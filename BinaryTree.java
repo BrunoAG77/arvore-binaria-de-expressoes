@@ -1,3 +1,4 @@
+
 // Bruno Antico Galin 10417318
 // Ismael de Sousa e Silva 10410870
 // Referência: https://www.youtube.com/watch?v=Etpc_-br5rI
@@ -88,5 +89,19 @@ public class BinaryTree {
 			postOrder(root.getRight());
 			System.out.print(root.getKey() + " ");
 		}
+	}
+	
+	private void inOrderCalculus(TreeNode root) {
+		if (root != null) {
+			inOrderCalculus(root.getLeft());
+			root.getLeft().visitar();
+			root.visitar();
+			inOrderCalculus(root.getRight());
+			root.getRight().visitar();
+		}
+	}
+	
+	public void calcular() {
+		inOrderCalculus(root);
 	}
 }
