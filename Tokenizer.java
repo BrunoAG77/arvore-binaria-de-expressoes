@@ -76,7 +76,7 @@ public class Tokenizer {
 				tokenizing = false;
 			}
 			else {
-				System.out.println("Token não reconhecido: " + aux);
+				System.out.println("Operador inválido: " + aux);
 				valid = false;
 				tokenizing = false;
 			}
