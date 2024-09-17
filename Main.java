@@ -76,17 +76,15 @@ public class Main {
         }
       }
       
-        /*else if (opcao.equals("4")) {
+        else if (opcao.equals("4")) {
             if (infix.isEmpty()) {
                 System.out.println("Erro: Não há expressão na memória. Volte à Opção 1.");
             }
             else {
-                double res = inpos.calcularposfix(infix, variaveis);
-                System.out.println("Resultado do cálculo: " + res);
-                System.out.println("Expressão: " + inpos.conversao(infix));
-                System.out.println("Valores das variáveis utilizadas na expressão:");
+                System.out.println("Resultado: "); 
+                tree.calcular();
             }
-        }*/
+        }
 
       else if (opcao.equals("5")){
         System.out.println("Programa encerrado.");
