@@ -45,6 +45,7 @@ public class Main {
     	          }
     	          inpos.conversao(expression, posfix);
     	          tree.createTree(posfix);
+    	          System.out.println("Expressão válida.");
     	          System.out.println("Árvore binária criada.");
     	        }
     	}
