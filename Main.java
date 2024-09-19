@@ -36,7 +36,7 @@ public class Main {
       else if (opcao.equals("2")) {
     	try {
     		if (infix.isEmpty()) {
-    	          System.out.println("Erro. Não há expressão na memória. Volte à Opção 1.");
+    	          System.out.println("Erro: Não há expressão na memória. Volte à Opção 1.");
     	        }
     	        else {
     	          for (int i = 0; i < tokens.size(); i++) {
@@ -50,15 +50,15 @@ public class Main {
     	        }
     	}
     	catch (NullPointerException e){
-    		System.out.println("Erro. Não há expressão na memória. Volte à Opção 1.");
+    		System.out.println("Erro: Não há expressão na memória. Volte à Opção 1.");
     		infix = "";
     	}
     	catch (EmptyStackException e){
-    		System.out.println("Erro. Falta um operando para uma operação/Há um operador em excesso. Volte à Opção 1.");
+    		System.out.println("Erro: Falta um operando para uma operação/Há um operador em excesso. Volte à Opção 1.");
     		infix = "";
     	}
     	catch (NumberFormatException e){
-    		System.out.println("Erro. Não há parênteses correspondentes. Volte à Opção 1.");
+    		System.out.println("Erro: Não há parênteses correspondentes. Volte à Opção 1.");
     		infix = "";
     	}
       }
@@ -68,23 +68,33 @@ public class Main {
           System.out.println("Erro: Não há expressão na memória. Volte à Opção 1.");
         }
         else {
-          System.out.println("Árvore binária percorrida em pré-ordem:");
-          tree.preOrder();
-          System.out.println("\nÁrvore binária percorrida em em-ordem:");
-          tree.inOrder();
-          System.out.println("\nÁrvore binária percorrida em pós-ordem:");
-          tree.postOrder();
+          if (tree.getRoot() != null) {
+        	  System.out.println("Árvore binária percorrida em pré-ordem:");
+        	  tree.preOrder();
+        	  System.out.println("\nÁrvore binária percorrida em em-ordem:");
+        	  tree.inOrder();
+        	  System.out.println("\nÁrvore binária percorrida em pós-ordem:");
+        	  tree.postOrder();
+          }
+          else {
+        	  System.out.println("Erro: A árvore não foi criada ainda. Volte à Opção 2.");
+          }
         }
       }
       
         else if (opcao.equals("4")) {
-            if (infix.isEmpty()) {
+        	try {
+        		if (infix.isEmpty()) {
                 System.out.println("Erro: Não há expressão na memória. Volte à Opção 1.");
-            }
-            else {
-                System.out.println("Resultado: "); 
-                tree.calcular();
-            }
+        		}
+        		else {
+        			System.out.println("Resultado: "); 
+        			tree.calcular();
+        		}
+        	}
+        	catch (NullPointerException e) {
+        		System.out.println("Erro: A árvore não foi criada ainda. Volte à Opção 2.");
+        	}
         }
 
       else if (opcao.equals("5")){
