@@ -36,21 +36,20 @@ public class TreeNodeOperator extends TreeNode {
     		float left = getLeft().visitar();
     		float right = getRight().visitar();
     		if (operator == '+'){
-    			return left + right;
+    			Soma add = new Soma();
+    			return add.somar(left, right);
     		}
     		if (operator == '-'){
-    			return left - right;
+    			Subtrai less = new Subtrai();
+    			return less.subtrair(left, right);
     		}
     		if (operator == '*'){
-    			return left * right;
+    			Multiplica mult = new Multiplica();
+    			return mult.multiplicar(left, right);
     		}
     		if (operator == '/'){
-    			try{
-    				return left / right;
-    			}
-    			catch(ArithmeticException e){
-    				System.out.println("Erro: Divisão por zero.");
-    			}
+    			Divide div = new Divide();
+    			return div.dividir(left, right);
     		}
     		else{
     			throw new IllegalArgumentException("Operador inválido: " + operator);
@@ -58,4 +57,5 @@ public class TreeNodeOperator extends TreeNode {
     	}
         return 1;
     }
+
 }
