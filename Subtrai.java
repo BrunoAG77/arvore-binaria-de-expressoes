@@ -4,14 +4,16 @@
 // Referência: https://www.youtube.com/watch?v=b_NjndniOqY
 // Referência: https://www.youtube.com/watch?v=Gt2yBZAhsGM
 // Referência: https://www.youtube.com/watch?v=wL7JOLxbMI4
-package apl1_ed2;
+package apl1_ed2copy;
 
 public class Subtrai extends TreeNodeOperator {
 	public Subtrai() {
 		super('-');
 	}
 	
-	public float subtrair(float left, float right) {
+	public float visitar() {
+		float left = getLeft().visitar();
+		float right = getRight().visitar();
 		return left - right;
 	}
 }
