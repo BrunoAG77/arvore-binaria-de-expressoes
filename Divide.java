@@ -4,15 +4,17 @@
 // Referência: https://www.youtube.com/watch?v=b_NjndniOqY
 // Referência: https://www.youtube.com/watch?v=Gt2yBZAhsGM
 // Referência: https://www.youtube.com/watch?v=wL7JOLxbMI4
-package apl1_ed2;
+package apl1_ed2copy;
 
 public class Divide extends TreeNodeOperator{
 	public Divide() {
 		super('/');
 	}
 	
-	public float dividir(float left, float right) {
+	public float visitar() {
 		try{
+			float left = getLeft().visitar();
+			float right = getRight().visitar();
 			return left / right;
 		}
 		catch(ArithmeticException e){
