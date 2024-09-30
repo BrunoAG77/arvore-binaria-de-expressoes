@@ -5,9 +5,9 @@
 // Referência: https://www.youtube.com/watch?v=Gt2yBZAhsGM
 // Referência: https://www.youtube.com/watch?v=wL7JOLxbMI4
 
-package apl1_ed2;
+package apl1_ed2copy;
 
-public class TreeNodeOperator extends TreeNode {
+public abstract class TreeNodeOperator extends TreeNode {
 	
 	private char operator;
 
@@ -31,31 +31,6 @@ public class TreeNodeOperator extends TreeNode {
 		return 0;
 	}
 	
-    public float visitar() {
-    	if (isOperator(operator)) {
-    		float left = getLeft().visitar();
-    		float right = getRight().visitar();
-    		if (operator == '+'){
-    			Soma add = new Soma();
-    			return add.somar(left, right);
-    		}
-    		if (operator == '-'){
-    			Subtrai less = new Subtrai();
-    			return less.subtrair(left, right);
-    		}
-    		if (operator == '*'){
-    			Multiplica mult = new Multiplica();
-    			return mult.multiplicar(left, right);
-    		}
-    		if (operator == '/'){
-    			Divide div = new Divide();
-    			return div.dividir(left, right);
-    		}
-    		else{
-    			throw new IllegalArgumentException("Operador inválido: " + operator);
-    		}
-    	}
-        return 1;
-    }
+    public abstract float visitar();
 
 }
